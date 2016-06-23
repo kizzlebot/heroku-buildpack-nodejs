@@ -128,8 +128,20 @@ build_dependencies() {
   run_if_present 'heroku-postbuild'
 }
 
+build_spotify() {
+    mkdir $BUILD_DIR/libspotify
+    tar -xvzf $BP_DIR/vendor/libspotify.tar.gz $BUILD_DIR/libspotify
+    cd $BUILD_DIR/libspotify
+    
+    mkdir -p $HOME/libspotify
+}
+
+
+
 header "Building dependencies"
 build_dependencies | output "$LOG_FILE"
+header "Building spotify"
+build_spotify | output "$LOG_FILE"
 
 cache_build() {
   local cache_directories=$(get_cache_directories)
